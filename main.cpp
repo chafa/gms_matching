@@ -20,10 +20,27 @@ void runImagePair(){
 
 int main()
 {
+
+    std::string best_matche, j, out_capt_time, in_capt_time;
+    int hN, mN, sN, hI, mI, sI, hD, mD, sD, TimeDifference, matches(0), max_matches(0);
+    char data[256];
+
+    FILE *f;
+
+    // get capture time of the output image
+
+    f=popen("date |cut -d ' ' -f5","r");
+    if(fgets(data,256,f)!=NULL) date1.append(data);pclose(f);
+    hN=std::stoi(date1.substr(0,2));
+    mN=std::stoi(date1.substr(3,2));
+    sN=std::stoi(date1.substr(6,2));
+
 #ifdef USE_GPU
     int flag = cuda::getCudaEnabledDeviceCount();
     if (flag != 0){ cuda::setDevice(0); }
 #endif // USE_GPU
+
+
 
     runImagePair();
 
